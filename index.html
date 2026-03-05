@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        /* Tema escuro */
+        body {
+            background-image: url('download.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #new-task {
+            width: calc(100% - 100px);
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2e2e2e;
+            color: #e0e0e0;
+            margin-right: 10px;
+        }
+
+        #add-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        #add-button:hover {
+            background-color: #505050;
+        }
+
+        #gif-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+        #gif-button:hover {
+            background-color: #505050;
+        }
+
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-row input[type="date"],
+        .input-row input[type="time"] {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2e2e2e;
+            color: #e0e0e0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        li.completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #ff5252;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .remove-btn:hover {
+            color: #ff1744;
+        }
+
+        /* lixeira */
+        #trash {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 220px;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            color: #e0e0e0;
+        }
+        #trash h2 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        #trash ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 14px;
+        }
+        #trash li {
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        #trash li button {
+            background: none;
+            border: none;
+            color: #4caf50;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0 5px;
+        }
+        #trash li button:hover {
+            color: #81c784;
+        }
+
+        /* gif do lagarto */
+        #dancing-lizard {
+            position: fixed;
+            top: 10px;
+            right: 520px;
+            width: 120px;
+            height: auto;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        #random-gif {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            width: 150px;
+            height: auto;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        /* youtube iframe */
+        #youtube-container {
+            position: fixed;
+            top: 150px;
+            left: 10px;
+            width: 180px;
+            height: 240px;
+            border: 2px solid #3a3a3a;
+            border-radius: 8px;
+            background-color: #000;
+        }
+        #youtube-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 6px;
+        }
+        
+            #Bob {
+                position: fixed;
+                top: 10px;
+                right: 1400px;
+                width: 120px;
+                height: auto;
+                pointer-events: none;
+                opacity: 1;
+            }
+
+        /* roleta */
+        #spinner-container {
+            position: fixed;
+            bottom: 150px;
+            right: 20px;
+            width: 320px;
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            color: #e0e0e0;
+            max-height: 550px;
+            overflow-y: auto;
+        }
+        #spinner-container h2 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        #spinner-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        #spinner-input {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2e2e2e;
+            color: #e0e0e0;
+        }
+        #spinner-add-btn {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+        #spinner-add-btn:hover {
+            background-color: #505050;
+        }
+        #spinner-items {
+            font-size: 12px;
+        }
+        #spinner-items span {
+            background-color: #2a2a2a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        #spinner-items button {
+            background: none;
+            border: none;
+            color: #ff5252;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 0;
+        }
+        #spinner-items button:hover {
+            color: #ff1744;
+        }
+        #spinner-result {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Dino Game */
+        #dino-game-container {
+            position: fixed;
+            left: 10px;
+            top: 400px;
+            width: 300px;
+            height: 200px;
+            background-color: rgba(30, 30, 30, 0.9);
+            border: 2px solid #3a3a3a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #dino-game {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: pointer;
+        }
+        .dino {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background-image: url('dino.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .cacto {
+            position: absolute;
+            bottom: 20px;
+            width: 40px;
+            height: 40px;
+            background-image: url('cacto.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: moveLeft 3s linear;
+        }
+        @keyframes moveLeft {
+            from { right: -30px; }
+            to { right: 300px; }
+        }
+        #dino-score {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            color: #4caf50;
+            font-size: 12px;
+            z-index: 10;
+        }
+        #dino-game-over {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #ff5252;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-align: center;
+            z-index: 100;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Minha Lista de Tarefas</h1>
+        <div class="input-row">
+            <input type="text" id="new-task" placeholder="Adicionar nova tarefa...">
+            <input type="date" id="task-date">
+            <input type="time" id="task-duration" step="60" title="Duração (horas:minutos)">
+            <button id="add-button">Adicionar</button>
+            <button id="gif-button">GIF aleatório</button>
+        </div>
+        <ul id="task-list"></ul>
+    </div>
+
+    <!-- lixeira com últimas tarefas deletadas -->
+    <div id="trash">
+        <h2>Lixeira</h2>
+        <ul id="deleted-list"></ul>
+    </div>
+
+    <!-- roleta -->
+    <div id="spinner-container">
+        <h2>Roleta</h2>
+        <div id="spinner-options">
+            <input type="text" id="spinner-input" placeholder="Digite uma opção...">
+            <button id="spinner-add-btn">Adicionar opção</button>
+        </div>
+        <div id="spinner-items" style="display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; font-size: 12px;"></div>
+        <canvas id="spinner-canvas" width="300" height="300" style="border: 2px solid #3a3a3a; border-radius: 50%; cursor: pointer;"></canvas>
+        <div id="spinner-result" style="margin-top: 10px; text-align: center; font-size: 14px;"></div>
+    </div>
+
+    <!-- gif do lagarto dançando -->
+    <img id="dancing-lizard" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWRiZGV0dnM0dWR3OXRqNnhsd2lvdXh2NHBsNGF3dTV2Y2I2OGFueCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2ARMmLelTNIz2lft2w/giphy.gif" alt="Lagarto dançando">
+    <img id="Bob" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmg1MThvYTgzeXExc3JzamthdDRhZjByNWNzZnA2cmNoZzJudjB3OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cAi0jErQPoh24Lam7B/giphy.gif" alt="Bob o lagarto">
+    <img id="random-gif" src="" alt="GIF aleatório">
+
+    <!-- Dino Game -->
+    <div id="dino-game-container">
+        <div id="dino-game">
+            <div id="dino-score">Pontos: 0</div>
+            <div class="dino" id="dino"></div>
+            <div id="dino-game-over">Game Over! Clique para recomeçar</div>
+        </div>
+    </div>
+
+    <!-- youtube video -->
+    <!-- Audio em loop do vídeo -->
+    <audio id="background-audio" autoplay loop>
+        <source src="audio.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+
+    <script src="main.js"></script>
+</body>
+</html>
