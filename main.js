@@ -9,14 +9,28 @@ const randomGifImg = document.getElementById('random-gif');
 const backgroundAudio = document.getElementById('background-audio');
 let audioPlayed = false;
 
-document.addEventListener('click', () => {
-    if (!audioPlayed) {
-        backgroundAudio.play().catch(error => {
-            console.log('Audio play failed:', error);
+// helper to start playback when we know the user interacted
+function tryPlayAudio() {
+    // only attempt once unless it fails
+    if (audioPlayed) return;
+    backgroundAudio.play()
+        .then(() => {
+            audioPlayed = true;
+            console.log('background audio started');
+        })
+        .catch(error => {
+            // if the play request is rejected (autoplay blocked) we
+            // keep audioPlayed=false so another user gesture can retry
+            console.warn('Audio play failed:', error);
         });
-        audioPlayed = true;
-    }
-});
+}
+
+// most mobile/desktop browsers require a user gesture to begin
+// playback; listen for a click anywhere and try again until success
+document.addEventListener('click', tryPlayAudio);
+
+document.addEventListener('keydown', tryPlayAudio);
+
 
 // keep the last 3 deleted tasks as objects {text,date,duration}
 const lastDeleted = [];

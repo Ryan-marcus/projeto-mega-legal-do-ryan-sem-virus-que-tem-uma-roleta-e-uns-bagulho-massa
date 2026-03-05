@@ -395,7 +395,9 @@
 
     <!-- youtube video -->
     <!-- Audio em loop do vídeo -->
-    <audio id="background-audio" autoplay loop>
+    <!-- autoplay is unreliable on GitHub Pages – browsers block it without a user gesture.
+         we keep loop but provide controls so the user can manually start playback. -->
+    <audio id="background-audio" controls loop>
         <source src="audio.mp3" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
