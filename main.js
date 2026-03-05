@@ -5,6 +5,19 @@ const deletedList = document.getElementById('deleted-list');
 const gifButton = document.getElementById('gif-button');
 const randomGifImg = document.getElementById('random-gif');
 
+// Audio handling
+const backgroundAudio = document.getElementById('background-audio');
+let audioPlayed = false;
+
+document.addEventListener('click', () => {
+    if (!audioPlayed) {
+        backgroundAudio.play().catch(error => {
+            console.log('Audio play failed:', error);
+        });
+        audioPlayed = true;
+    }
+});
+
 // keep the last 3 deleted tasks as objects {text,date,duration}
 const lastDeleted = [];
 
